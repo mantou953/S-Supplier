@@ -1,0 +1,147 @@
+/*body*/
+body {
+	font-family: "Microsoft YaHei";
+	font-size: 9pt;
+	padding: 3px;
+}
+
+/*table*/
+table {
+	border-collapse: collapse;
+	text-indent: 0;
+	border: none;
+}
+
+tr {
+	border: none;
+}
+
+td {
+	vertical-align: middle;
+	word-break: break-all;
+	word-wrap: break-word;
+	text-align: left;
+	padding-left: 8px;
+	border: 1px solid #e6e6e6;
+}
+
+.table {
+	width: 100%;
+	padding: 5px;
+}
+
+.table tr {
+	height: 40px;
+}
+
+.table tr.title {
+	background: #f2f2f2;
+}
+
+.table tr.top {
+	height: 30px;
+}
+
+.table tr.title .button {
+	float: right;
+}
+
+.table tr.data:hover {
+	background-color: #fff8dc;
+	cursor: pointer;
+}
+
+.table td {
+	padding: 3px 10px;
+}
+
+.table td.title {
+	background: #f2f2f2;
+}
+
+.table td.none {
+	color: red;
+	text-align: center;
+}
+
+.border-none table, .border-none tr, .border-none td {
+	border: none;
+}
+
+/*button*/
+.button {
+	background-color: #1E9FFF;
+	display: inline-block;
+	height: 38px;
+	line-height: 38px;
+	padding: 0 18px;
+	color: #fff;
+	white-space: nowrap;
+	text-align: center;
+	font-size: 14px;
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+	margin: 2px 2px;
+}
+
+.primary-button {
+	border: 1px solid #C9C9C9;
+	background-color: #fff;
+	color: #555;
+}
+
+.normal-button {
+	background-color: #009688;
+}
+
+.danger-button {
+	background-color: #FF5722;
+}
+
+.warn-button {
+	background-color: #FFB800;
+}
+
+.bg-button {
+	height: 44px;
+	line-height: 44px;
+	padding: 0 25px;
+	font-size: 16px;
+}
+
+.sm-button {
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+	font-size: 12px;
+}
+
+.xs-button {
+	height: 22px;
+	line-height: 22px;
+	padding: 0 5px;
+	font-size: 12px;
+}
+
+.disabled-button, .disabled-button:active, .disabled-button:hover {
+	background-color: #FBFBFB;
+	color: #C9C9C9;
+	cursor: not-allowed;
+	opacity: 1;
+}
+
+
+.query-item-input {
+	width: 96%;
+	height: 30px;
+	float: left;
+	padding: 3px;
+	text-align: left;
+	line-height: 30px;
+	border: 1px solid #dcdfe6;
+	border-radius: 2px;
+	background-color: #fff;
+	background-image: none;
+}
+

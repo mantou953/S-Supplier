@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+	<bean id="wxSupplierManager" class="com.seeyon.apps.wxsupplier.manager.impl.WxSupplierManagerImpl">
+		<property name="wxSupplierDao" ref="wxSupplierDao" />
+	</bean>
+	
+	<!-- 表单流程触发事件类 -->
+	<bean id="wxSupplierJCWorkFlowEvent" class="com.seeyon.apps.wxsupplier.workflow.WxSupplierJCWorkFlowEvent">
+		<property name="wxSupplierManager" ref="wxSupplierManager" />
+	</bean>
+	<bean id="wxSupplierPSWorkFlowEvent" class="com.seeyon.apps.wxsupplier.workflow.WxSupplierPSWorkFlowEvent">
+		<property name="wxSupplierManager" ref="wxSupplierManager" />
+	</bean>
+	<bean id="wxSupplierCPWorkFlowEvent" class="com.seeyon.apps.wxsupplier.workflow.WxSupplierCPWorkFlowEvent">
+		<property name="wxSupplierManager" ref="wxSupplierManager" />
+	</bean>
+	<bean id="wxSupplierTCWorkFlowEvent" class="com.seeyon.apps.wxsupplier.workflow.WxSupplierTCWorkFlowEvent">
+		<property name="wxSupplierManager" ref="wxSupplierManager" />
+	</bean>
+	<bean id="wxSupplierSignCheckWorkFlowEvent" class="com.seeyon.apps.wxsupplier.workflow.WxSupplierSignCheckWorkFlowEvent">
+		<property name="wxSupplierManager" ref="wxSupplierManager" />
+	</bean>
+	<bean id="wxSupplierNewCPWorkFlowEvent" class="com.seeyon.apps.wxsupplier.workflow.WxSupplierNewCPWorkFlowEvent">
+		<property name="wxSupplierManager" ref="wxSupplierManager" />
+	</bean>
+</beans>

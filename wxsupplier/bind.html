@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>绑定供应商</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="css/style_common.css">
+<script type="text/javascript" src="js/jquery/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+	function bindWxSupplier(type){
+		ajaxPost("/seeyon/wxSupplierController.do?method=bindWxSupplier", {openId:$("#openId").val(), supplierCode:$("#supplierCode").val(), type:type}, function(data){
+			layer.alert("操作成功", function(index) {
+				layer.close(index);
+				layer.close(layerIndex);
+				if (type === "unbind") {
+					$("#supplierCode").val("");
+				}
+			});
+		}, true);
+	}
+
+	$(function() {
+		ajaxPost("/seeyon/wxSupplierController.do?method=getWxSupplier", {
+			code : request("code")
+		}, function(data) {
+			if (data) {
+				$("#openId").val(getString(data.openId));
+				$("#supplierCode").val(getString(data.supplierCode));
+			}
+		}, true);
+	});
+</script>
+</head>
+<body>
+	<table id="UserInfoTable" class="table">
+		<tr class="title">
+			<td colspan="2">绑定供应商</td>
+		</tr>
+		<tr>
+			<td width="40%" class="title">供应商编码</td>
+			<td>
+				<input type="hidden" id="openId" name="openId" class="query-item-input"/>
+				<input type="text" id="supplierCode" name="supplierCode" class="query-item-input"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align:center;border: none;">
+				<br/>
+				<br/>
+				<a id="query-btn" class="button" onclick="bindWxSupplier('bind');">绑&nbsp;定</a>
+				&nbsp;&nbsp;&nbsp;
+				<a id="query-btn" class="button danger-button" onclick="bindWxSupplier('unbind');">解&nbsp;绑</a>
+				<br/>
+				<br/>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

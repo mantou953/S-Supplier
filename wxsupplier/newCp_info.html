@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新产品检验合格进仓单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="css/style_common.css">
+    <script type="text/javascript" src="js/jquery/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/jSignature/jSignature.min.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript">
+        // 重写
+        function btnCleanUp() {
+            $("#signature").jSignature("clear");
+            $("#signatureTd").empty();
+        }
+
+        //保存为图片
+        function btnGenerateImg() {
+            if ($("#signature").jSignature('getData', 'native').length === 0) {
+                layer.alert("请签名后再保存", function(index) {
+                    layer.close(index);
+                });
+                return;
+            }
+            var sig = $("#signature").jSignature('getData');
+            $("#signatureTd").empty();
+            $("#signatureTd").append('<img style="width:30;height:20px;" src="'+sig+'"/>');
+
+            ajaxPost("/seeyon/wxSupplierController.do?method=signName", {id:request("id"), tableName:"newCp", signName:sig}, function(data){
+                layer.alert("保存成功", function(index) {
+                    layer.close(index);
+                    window.location.reload();
+                });
+            }, true, "正在保存签名信息，请稍后...");
+        }
+
+        // 签名回写
+        function signNameCallback(data) {
+            // 如果签名字段有值
+            if (data && data.field0009 && data.field0009.length > 0 && data.signName && data.signName.length > 0) {
+                // 隐藏签名相关
+                $("div.signature_title").hide();
+                $("div.signature_div").hide();
+                $("div.tool_div").hide();
+
+                $("#signatureTd").empty();
+                $("#signatureTd").append('<img style="width:30;height:20px;" src="'+data.signName+'"/>');
+            }
+        }
+
+        function resetTableWidth(){
+            window.setTimeout(function(){
+                var detailTableWidth = $("#detail_table").width() + 100;
+                $("#main_table").width(detailTableWidth);
+                $("#detail_table").width(detailTableWidth);
+                $("#heji_table").width(detailTableWidth);
+            }, 1500);
+        }
+
+        function santuozhuang(data, index, dataList) {
+            var html = '';
+            // 散装
+            var sanValue = data.field0046;
+            if(sanValue && (sanValue === 1 || sanValue === "1")){
+                html += '<input type="checkbox" checked disabled>散装';
+            } else {
+                html += '<input type="checkbox" disabled>散装';
+            }
+            html += '&nbsp;&nbsp;';
+
+            // 托装
+            var tuoValue = data.field0047;
+            if(tuoValue && (tuoValue === 1 || tuoValue === "1")){
+                html += '<input type="checkbox" checked disabled>托装';
+            } else {
+                html += '<input type="checkbox" disabled>托装';
+            }
+            return html;
+        }
+
+        $(document).ready(function() {
+            var arguments = {
+                width : '100%',
+                height : '100%',
+                color : '#000',
+                "decor-color" : "transparent",
+                lineWidth : '3'
+            };
+            $("#signature").jSignature(arguments);
+
+            loadElementData("title_table,main_table,heji_table", "/seeyon/wxSupplierController.do?method=objectInfo", {id : request("id"), tableName : "newCp"}, "GET", true);
+
+            loadTableData("detail_table", "/seeyon/wxSupplierController.do?method=objectList", {id : request("id"), tableName : "newCpson"}, "GET", true);
+
+            resetTableWidth();
+        });
+    </script>
+    <style type="text/css">
+        td {
+            min-width: 80px;
+        }
+
+        .margin_bottom20 {
+            margin-bottom: 20px;
+        }
+
+        .main_div {
+            width: 100%;
+            overflow: scroll;
+        }
+
+        .signature_title {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .signature_div {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #e6e6e6;
+            background: #dcdfe6;
+        }
+
+        .tool_div {
+            width: 100%;
+            text-align: center;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="main_div">
+    <table id="title_table" class="table">
+        <tr>
+            <td class="bold center" field="dname"></td>
+        </tr>
+        <tr class="title">
+            <td class="center">新产品检验合格进仓单</td>
+        </tr>
+    </table>
+</div>
+<div class="main_div">
+    <table id="main_table" class="table">
+        <tr>
+            <td class="title">进仓单号</td>
+            <td field="field0001"></td>
+            <td class="title">进仓日期</td>
+            <td field="jctime"></td>
+            <td class="title">厂家</td>
+            <td field="field0004"></td>
+            <td class="title">厂家代码</td>
+            <td field="field0005"></td>
+            <td class="title">仓尺码</td>
+            <td field="field0016"></td>
+        </tr>
+        <tr>
+            <td class="title">制单人</td>
+            <td field="pname"></td>
+            <td class="title">工号</td>
+            <td field="field0012"></td>
+            <td class="title">供应商签名</td>
+            <td colspan="5" id="signatureTd" field="field0009" callback="signNameCallback"></td>
+        </tr>
+    </table>
+    <table id="detail_table" class="table">
+        <tr>
+            <td width="80" class="title" field="field0027">序号</td>
+            <td class="title" field="field0028">OEM订单号</td>
+            <td class="title" field="field0048">品种</td>
+            <td class="title" field="field0029">品名</td>
+            <td class="title" field="field0030">规格</td>
+            <td class="title" field="field0031">产品编号</td>
+            <td class="title" field="field0055">单位</td>
+            <td class="title" field="field0032">等级</td>
+            <td class="title" field="field0033">色号</td>
+            <td class="title" field="field0053">仓号</td>
+            <td class="title" field="field0054">合同号</td>
+            <!-- 散装field0046,托装field0047-->
+            <td class="title" field="field0046" callback="santuozhuang">散托装</td>
+            <td class="title" field="field0038">数量</td>
+            <td class="title" field="field0039">区位</td>
+            <td class="title" field="field0043">片/箱</td>
+            <td class="title" field="field0044">kg/片</td>
+            <td class="title" field="field0045">kg/箱</td>
+        </tr>
+    </table>
+    <table id="heji_table" class="table margin_bottom20">
+        <tr>
+            <td width="80" class="title">合计</td>
+            <td field="field0006"></td>
+        </tr>
+    </table>
+</div>
+
+<!--签字区域-->
+<div class="signature_title">请供应商在下方区域签字</div>
+<div class="signature_div" id="signature" ></div>
+
+<!--操作区域-->
+<div class="tool_div">
+    <a id="query-btn" class="button" onclick="btnCleanUp();">重写</a>
+    &nbsp;&nbsp;
+    <a id="query-btn" class="button" onclick="btnGenerateImg();">保存</a>
+</div>
+</body>
+</html>

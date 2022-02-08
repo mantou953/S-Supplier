@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ctpConfig>
+    <wxsupplier>
+    	<!--微信公众号相关信息-->
+    	<appid name="微信公众号的AppId"><![CDATA[wxa4fe984bd1827de2]]></appid>
+    	<appSecret name="微信公众号的AppSecret"><![CDATA[02227ad70d1612f28cc205c716d9c4e2]]></appSecret>
+    	<openIdURL name="获取OpenId的接口地址"><![CDATA[https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code]]></openIdURL>
+    	<accessTokenURL name="获取AccessToken的接口地址"><![CDATA[https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s]]></accessTokenURL>
+    	<sendTemplateMsgURL name="发送模板消息的接口地址"><![CDATA[https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s]]></sendTemplateMsgURL>
+    	
+    	<!--流程事件相关信息-->
+    	<jcWorkFlowEventId name="进仓单表单流程事件ID">WxSupplierJCWorkFlowEvent</jcWorkFlowEventId>
+    	<jcWorkFlowEventLabel name="进仓单表单流程事件应用名称">进仓单（产品型号调整单）消息推送</jcWorkFlowEventLabel>
+    	<jcChangjia name="进仓单表单的厂家属性名称">厂家</jcChangjia>
+    	<jcChangjiaDaima name="进仓单表单的厂家代码属性名称">厂家代码</jcChangjiaDaima>
+    	
+    	<psWorkFlowEventId name="破损调数单表单流程事件ID">WxSupplierPSWorkFlowEvent</psWorkFlowEventId>
+    	<psWorkFlowEventLabel name="破损调数单表单流程事件应用名称">破损调数单消息推送</psWorkFlowEventLabel>
+    	<psChangjia name="破损调数单表单的厂家属性名称">厂家</psChangjia>
+    	<psChangjiaDaima name="破损调数单表单的厂家代码属性名称">厂家代码</psChangjiaDaima>
+    	
+    	<cpWorkFlowEventId name="产品检验合格进仓单表单流程事件ID">WxSupplierCPWorkFlowEvent</cpWorkFlowEventId>
+    	<cpWorkFlowEventLabel name="产品检验合格进仓单表单流程事件应用名称">产品检验合格进仓单消息推送</cpWorkFlowEventLabel>
+    	<cpChangjia name="产品检验合格进仓单表单的厂家属性名称">厂家</cpChangjia>
+    	<cpChangjiaDaima name="产品检验合格进仓单表单的厂家代码属性名称">厂家代码</cpChangjiaDaima>
+
+		<newCpWorkFlowEventId name="新产品检验合格进仓单表单流程事件ID">WxSupplierNewCPWorkFlowEvent</newCpWorkFlowEventId>
+		<newCpWorkFlowEventLabel name="新产品检验合格进仓单表单流程事件应用名称">新产品检验合格进仓单消息推送</newCpWorkFlowEventLabel>
+		<newCpChangjia name="新产品检验合格进仓单表单的厂家属性名称">厂家</newCpChangjia>
+		<newCpChangjiaDaima name="新产品检验合格进仓单表单的厂家代码属性名称">厂家代码</newCpChangjiaDaima>
+    	
+    	<tcWorkFlowEventId name="退仓单变更审批表流程事件ID">WxSupplierTCWorkFlowEvent</tcWorkFlowEventId>
+    	<tcWorkFlowEventLabel name="退仓单变更审批表流程事件应用名称">退仓单变更审批表消息推送</tcWorkFlowEventLabel>
+    	<tcChangjia name="退仓单变更审批表的厂家属性名称">厂家</tcChangjia>
+    	<tcChangjiaDaima name="退仓单变更审批表的厂家代码属性名称">厂家代码</tcChangjiaDaima>
+    	
+    	<signCheckWorkFlowEventId name="供应商签名验证事件ID">WxSupplierSignCheckWorkFlowEvent</signCheckWorkFlowEventId>
+    	<signCheckWorkFlowEventLabel name="供应商签名验证事件应用名称">供应商签名验证</signCheckWorkFlowEventLabel>
+    	
+    	<getFormmainId name="获取主表ID"><![CDATA[
+    		select form_recordid from col_summary where id = {id}
+    	]]></getFormmainId>
+    	
+    	<!--进仓单模板消息相关-->
+    	<jcMessageTemplateId name="模板ID"><![CDATA[QRHpmEIx7oiE7hUWvInwnXXriq8CMkckFHLtxknVJew]]></jcMessageTemplateId>
+    	<jcURL name="跳转地址"><![CDATA[https://mps.monalisagroup.com.cn/seeyon/wxsupplier/jc_info.html?tableName=jc&id=%s]]></jcURL>
+    	<jcBillName name="表单名称">进仓单（产品型号调整单）</jcBillName>
+    	<jcFirstKey name="属性"><![CDATA[first]]></jcFirstKey>
+    	<jcFirstData name="内容"><![CDATA[您好，请签名确认！]]></jcFirstData>
+    	<jcFirstColor name="字体颜色"><![CDATA[#173177]]></jcFirstColor>
+    	<jcKeyword1Key name="属性"><![CDATA[keyword1]]></jcKeyword1Key>
+    	<jcKeyword1Data name="内容"><![CDATA[${dateTime}]]></jcKeyword1Data>
+    	<jcKeyword1Color name="字体颜色"><![CDATA[#173177]]></jcKeyword1Color>
+    	<jcKeyword2Key name="属性"><![CDATA[keyword2]]></jcKeyword2Key>
+    	<jcKeyword2Data name="内容"><![CDATA[${billName}]]></jcKeyword2Data>
+    	<jcKeyword2Color name="字体颜色"><![CDATA[#173177]]></jcKeyword2Color>
+    	<jcKeyword3Key name="属性"><![CDATA[keyword3]]></jcKeyword3Key>
+    	<jcKeyword3Data name="内容"><![CDATA[请确认流程表单的内容并签名确认，如有问题请联系相关负责人。]]></jcKeyword3Data>
+    	<jcKeyword3Color name="字体颜色"><![CDATA[#173177]]></jcKeyword3Color>
+    	<jcRemarkKey name="属性"><![CDATA[remark]]></jcRemarkKey>
+    	<jcRemarkData name="内容"><![CDATA[]]></jcRemarkData>
+    	<jcRemarkColor name="字体颜色"><![CDATA[]]></jcRemarkColor>
+    	
+    	<!--破损调数单模板消息相关-->
+    	<psMessageTemplateId name="模板ID"><![CDATA[QRHpmEIx7oiE7hUWvInwnXXriq8CMkckFHLtxknVJew]]></psMessageTemplateId>
+    	<psURL name="跳转地址"><![CDATA[https://mps.monalisagroup.com.cn/seeyon/wxsupplier/ps_info.html?tableName=ps&id=%s]]></psURL>
+    	<psBillName name="表单名称">破损调数单</psBillName>
+    	<psFirstKey name="属性"><![CDATA[first]]></psFirstKey>
+    	<psFirstData name="内容"><![CDATA[您好，请签名确认！]]></psFirstData>
+    	<psFirstColor name="字体颜色"><![CDATA[#173177]]></psFirstColor>
+    	<psKeyword1Key name="属性"><![CDATA[keyword1]]></psKeyword1Key>
+    	<psKeyword1Data name="内容"><![CDATA[${dateTime}]]></psKeyword1Data>
+    	<psKeyword1Color name="字体颜色"><![CDATA[#173177]]></psKeyword1Color>
+    	<psKeyword2Key name="属性"><![CDATA[keyword2]]></psKeyword2Key>
+    	<psKeyword2Data name="内容"><![CDATA[${billName}]]></psKeyword2Data>
+    	<psKeyword2Color name="字体颜色"><![CDATA[#173177]]></psKeyword2Color>
+    	<psKeyword3Key name="属性"><![CDATA[keyword3]]></psKeyword3Key>
+    	<psKeyword3Data name="内容"><![CDATA[请确认流程表单的内容并签名确认，如有问题请联系相关负责人。]]></psKeyword3Data>
+    	<psKeyword3Color name="字体颜色"><![CDATA[#173177]]></psKeyword3Color>
+    	<psRemarkKey name="属性"><![CDATA[remark]]></psRemarkKey>
+    	<psRemarkData name="内容"><![CDATA[]]></psRemarkData>
+    	<psRemarkColor name="字体颜色"><![CDATA[]]></psRemarkColor>
+    	
+    	<!--产品检验合格进仓单模板消息相关-->
+    	<cpMessageTemplateId name="模板ID"><![CDATA[QRHpmEIx7oiE7hUWvInwnXXriq8CMkckFHLtxknVJew]]></cpMessageTemplateId>
+    	<cpURL name="跳转地址"><![CDATA[https://mps.monalisagroup.com.cn/seeyon/wxsupplier/cp_info.html?tableName=cp&id=%s]]></cpURL>
+    	<cpBillName name="表单名称">产品检验合格进仓单</cpBillName>
+    	<cpFirstKey name="属性"><![CDATA[first]]></cpFirstKey>
+    	<cpFirstData name="内容"><![CDATA[您好，请签名确认！]]></cpFirstData>
+    	<cpFirstColor name="字体颜色"><![CDATA[#173177]]></cpFirstColor>
+    	<cpKeyword1Key name="属性"><![CDATA[keyword1]]></cpKeyword1Key>
+    	<cpKeyword1Data name="内容"><![CDATA[${dateTime}]]></cpKeyword1Data>
+    	<cpKeyword1Color name="字体颜色"><![CDATA[#173177]]></cpKeyword1Color>
+    	<cpKeyword2Key name="属性"><![CDATA[keyword2]]></cpKeyword2Key>
+    	<cpKeyword2Data name="内容"><![CDATA[${billName}]]></cpKeyword2Data>
+    	<cpKeyword2Color name="字体颜色"><![CDATA[#173177]]></cpKeyword2Color>
+    	<cpKeyword3Key name="属性"><![CDATA[keyword3]]></cpKeyword3Key>
+    	<cpKeyword3Data name="内容"><![CDATA[请确认流程表单的内容并签名确认，如有问题请联系相关负责人。]]></cpKeyword3Data>
+    	<cpKeyword3Color name="字体颜色"><![CDATA[#173177]]></cpKeyword3Color>
+    	<cpRemarkKey name="属性"><![CDATA[remark]]></cpRemarkKey>
+    	<cpRemarkData name="内容"><![CDATA[]]></cpRemarkData>
+    	<cpRemarkColor name="字体颜色"><![CDATA[]]></cpRemarkColor>
+    	
+    	<!--退仓单变更审批表模板消息相关-->
+    	<tcMessageTemplateId name="模板ID"><![CDATA[QRHpmEIx7oiE7hUWvInwnXXriq8CMkckFHLtxknVJew]]></tcMessageTemplateId>
+    	<tcURL name="跳转地址"><![CDATA[https://mps.monalisagroup.com.cn/seeyon/wxsupplier/tc_info.html?tableName=tc&id=%s]]></tcURL>
+    	<tcBillName name="表单名称">退仓单变更审批表</tcBillName>
+    	<tcFirstKey name="属性"><![CDATA[first]]></tcFirstKey>
+    	<tcFirstData name="内容"><![CDATA[您好，请签名确认！]]></tcFirstData>
+    	<tcFirstColor name="字体颜色"><![CDATA[#173177]]></tcFirstColor>
+    	<tcKeyword1Key name="属性"><![CDATA[keyword1]]></tcKeyword1Key>
+    	<tcKeyword1Data name="内容"><![CDATA[${dateTime}]]></tcKeyword1Data>
+    	<tcKeyword1Color name="字体颜色"><![CDATA[#173177]]></tcKeyword1Color>
+    	<tcKeyword2Key name="属性"><![CDATA[keyword2]]></tcKeyword2Key>
+    	<tcKeyword2Data name="内容"><![CDATA[${billName}]]></tcKeyword2Data>
+    	<tcKeyword2Color name="字体颜色"><![CDATA[#173177]]></tcKeyword2Color>
+    	<tcKeyword3Key name="属性"><![CDATA[keyword3]]></tcKeyword3Key>
+    	<tcKeyword3Data name="内容"><![CDATA[请确认流程表单的内容并签名确认，如有问题请联系相关负责人。]]></tcKeyword3Data>
+    	<tcKeyword3Color name="字体颜色"><![CDATA[#173177]]></tcKeyword3Color>
+    	<tcRemarkKey name="属性"><![CDATA[remark]]></tcRemarkKey>
+    	<tcRemarkData name="内容"><![CDATA[]]></tcRemarkData>
+    	<tcRemarkColor name="字体颜色"><![CDATA[]]></tcRemarkColor>
+
+		<!--新进仓单审批表模板消息相关-->
+		<newCpMessageTemplateId name="模板ID"><![CDATA[QRHpmEIx7oiE7hUWvInwnXXriq8CMkckFHLtxknVJew]]></newCpMessageTemplateId>
+		<newCpURL name="跳转地址"><![CDATA[https://mps.monalisagroup.com.cn/seeyon/wxsupplier/newCp_info.html?tableName=newCp&id=%s]]></newCpURL>
+		<newCpBillName name="表单名称">新产品检验合格进仓单</newCpBillName>
+		<newCpFirstKey name="属性"><![CDATA[first]]></newCpFirstKey>
+		<newCpFirstData name="内容"><![CDATA[您好，请签名确认！]]></newCpFirstData>
+		<newCpFirstColor name="字体颜色"><![CDATA[#173177]]></newCpFirstColor>
+		<newCpKeyword1Key name="属性"><![CDATA[keyword1]]></newCpKeyword1Key>
+		<newCpKeyword1Data name="内容"><![CDATA[${dateTime}]]></newCpKeyword1Data>
+		<newCpKeyword1Color name="字体颜色"><![CDATA[#173177]]></newCpKeyword1Color>
+		<newCpKeyword2Key name="属性"><![CDATA[keyword2]]></newCpKeyword2Key>
+		<newCpKeyword2Data name="内容"><![CDATA[${billName}]]></newCpKeyword2Data>
+		<newCpKeyword2Color name="字体颜色"><![CDATA[#173177]]></newCpKeyword2Color>
+		<newCpKeyword3Key name="属性"><![CDATA[keyword3]]></newCpKeyword3Key>
+		<newCpKeyword3Data name="内容"><![CDATA[请确认流程表单的内容并签名确认，如有问题请联系相关负责人。]]></newCpKeyword3Data>
+		<newCpKeyword3Color name="字体颜色"><![CDATA[#173177]]></newCpKeyword3Color>
+		<newCpRemarkKey name="属性"><![CDATA[remark]]></newCpRemarkKey>
+		<newCpRemarkData name="内容"><![CDATA[]]></newCpRemarkData>
+		<newCpRemarkColor name="字体颜色"><![CDATA[]]></newCpRemarkColor>
+
+    	
+    	<!--Rest接口相关相关信息-->
+    	<restUserName name="Rest接口的用户"><![CDATA[rest]]></restUserName>
+    	<restPassword name="Rest接口的密码"><![CDATA[35b3a9d7-ea32-4db3-bb10-59d1c0f5d9ee]]></restPassword>
+    	<restLoginName name="Rest接口的登录名"><![CDATA[seeyon3]]></restLoginName>
+    	<restTokenURL name="获取Token的接口地址"><![CDATA[http://10.33.2.8:8080/seeyon/rest/token]]></restTokenURL>
+    	<restUploadURL name="上传文件的接口地址"><![CDATA[http://10.33.2.8:8080/seeyon/rest/attachment?token=%s&applicationCategory=0&extensions=&firstSave=true]]></restUploadURL>
+    	
+    
+    	<!--供应商与微信的绑定关系相关-->
+    	<getWxSupplierSql8OpenId name="根据OpenId获取供应商与微信的绑定关系"><![CDATA[
+    		SELECT
+				*
+			FROM 
+				wx_supplier
+			WHERE 
+				openid = {openId}
+    	]]></getWxSupplierSql8OpenId>
+    	<getWxSupplier8SupplierCode name="根据供应商编号获取供应商与微信的绑定关系"><![CDATA[
+    		SELECT
+				*
+			FROM 
+				wx_supplier
+			WHERE 
+				suppliercode = {supplierCode}
+    	]]></getWxSupplier8SupplierCode>
+    	<insertWxSupplier name="新增供应商与微信的绑定关系"><![CDATA[
+    		INSERT INTO wx_supplier (
+    			openid,
+    			suppliercode
+    		) VALUES (
+    			{openId},
+    			{supplierCode}
+    		)
+    	]]></insertWxSupplier>
+    	<updateWxSupplier name="更新供应商与微信的绑定关系"><![CDATA[
+    		UPDATE wx_supplier SET suppliercode = {supplierCode} WHERE openid = {openId}
+    	]]></updateWxSupplier>
+    	<deleteWxSupplier name="删除供应商与微信的绑定关系"><![CDATA[
+    		DELETE FROM wx_supplier WHERE openid = {openId}
+    	]]></deleteWxSupplier>
+    	
+    	<!--签名相关-->
+    	<getSignSql name="获取签名信息"><![CDATA[
+    		SELECT * FROM wx_supplier_sign WHERE id={id}
+    	]]></getSignSql>
+    	<insertSignSql name="新增签名信息"><![CDATA[
+    		INSERT INTO wx_supplier_sign (id, sign_time, sign_name) VALUES ({id},{signTime},{signName})
+    	]]></insertSignSql>
+    	<deleteSignSql name="删除签名信息"><![CDATA[
+    		DELETE FROM wx_supplier_sign WHERE id={id}
+    	]]></deleteSignSql>
+    	<getSummaryIdSql name="获取SummaryID"><![CDATA[
+    		SELECT id FROM col_summary WHERE form_recordid = {formmainId}
+    	]]></getSummaryIdSql>
+    	<updateCtpAttachmentSql name="更新CtpAttachment表"><![CDATA[
+    		UPDATE ctp_attachment SET att_reference={attReference}, sub_reference={subReference}, category=2 WHERE id={fileId}
+    	]]></updateCtpAttachmentSql>
+		<updateAffairSql name="更新CtpAffair表"><![CDATA[
+    		UPDATE ctp_affair SET SUBJECT='【已签名】'+ SUBJECT WHERE OBJECT_ID={summaryId}
+    	]]></updateAffairSql>
+    	
+    	
+    	<!--进仓相关信息-->
+    	<jcSql name="对象信息"><![CDATA[
+    		SELECT
+				t.*, m.name AS pname, e.showvalue AS dname
+			FROM
+				formmain_5935 t
+			LEFT JOIN org_member m ON m.id = t.field0005
+			LEFT JOIN ctp_enum_item e ON e.id = t.field0040
+			WHERE
+				t.id = {id}
+    	]]></jcSql>
+    	<jcField name="字段处理"><![CDATA[field0002,jctime,date2string,yyyy-MM-dd HH:mm]]></jcField>
+    	
+    	<jcUpdateSql name="签名更新"><![CDATA[
+    		UPDATE formmain_5935 SET field0006={fileId} WHERE id={id}
+    	]]></jcUpdateSql>
+    	
+    	
+    	<!--破损相关信息-->
+    	<psSql name="对象信息"><![CDATA[
+    		SELECT
+				t.*, m.name AS pname, ed.showvalue AS dname, eb.showvalue AS bname
+			FROM
+				formmain_5785 t
+			LEFT JOIN org_member m ON m.id = t.field0008
+			LEFT JOIN ctp_enum_item ed ON ed.id = t.field0034
+			LEFT JOIN ctp_enum_item eb ON eb.id = t.field0038
+			WHERE
+				t.id ={id}
+    	]]></psSql>
+    	<psField name="字段处理"><![CDATA[field0002,jctime,date2string,yyyy-MM-dd HH:mm]]></psField>
+    	
+    	<pssonSql name="详情信息"><![CDATA[
+    		select * from formson_5786 where formmain_id={id} order by sort asc
+    	]]></pssonSql>
+    	<pssonField name="破损详情字段处理"><![CDATA[]]></pssonField>
+    	
+    	<psUpdateSql name="签名更新"><![CDATA[
+    		UPDATE formmain_5785 SET field0009={fileId} WHERE id={id}
+    	]]></psUpdateSql>
+    	
+    	
+    	<!--进仓检验产品相关信息-->
+    	<cpSql name="对象信息"><![CDATA[
+	    	SELECT
+				t.*, m.name AS pname, e.showvalue AS dname
+			FROM
+				formmain_5783 t
+			LEFT JOIN org_member m ON m.id = t.field0008
+			LEFT JOIN ctp_enum_item e ON e.id = t.field0033
+			WHERE
+				t.id ={id}
+    	]]></cpSql>
+    	<cpField name="字段处理"><![CDATA[field0002,jctime,date2string,yyyy-MM-dd HH:mm]]></cpField>
+    	
+    	<cpsonSql name="详情信息">
+			<![CDATA[select * from formson_5784 where formmain_id={id} order by sort asc]]>
+		</cpsonSql>
+    	<cpsonField name="字段处理"><![CDATA[]]></cpsonField>
+    	
+    	<cpUpdateSql name="签名更新"><![CDATA[
+    		UPDATE formmain_5783 SET field0009={fileId} WHERE id={id}
+    	]]></cpUpdateSql>
+
+		<!--新产品进仓单相关信息-->
+		<newCpSql name="对象信息"><![CDATA[
+	    	SELECT
+				t.*, m.name AS pname, e.showvalue AS dname
+			FROM
+				formmain_8208 t
+			LEFT JOIN org_member m ON m.id = t.field0008
+			LEFT JOIN ctp_enum_item e ON e.id = t.field0014
+			WHERE
+				t.id ={id}
+    	]]></newCpSql>
+		<newCpField name="字段处理"><![CDATA[field0002,jctime,date2string,yyyy-MM-dd HH:mm]]></newCpField>
+
+		<newCpsonSql name="详情信息">
+			<![CDATA[select * from formson_8209 where formmain_id={id} order by sort asc]]>
+		</newCpsonSql>
+		<newCpsonField name="字段处理"><![CDATA[]]></newCpsonField>
+
+		<newCpUpdateSql name="签名更新"><![CDATA[
+    		UPDATE formmain_8208 SET field0009={fileId} WHERE id={id}
+    	]]></newCpUpdateSql>
+    	
+    	
+    	<!--退仓相关信息-->
+    	<tcSql name="对象信息"><![CDATA[
+	    	SELECT
+				t.*, m.name AS pname, ed.showvalue AS dname, eb.showvalue AS bname, u.name AS dept
+			FROM
+				formmain_7042 t
+			LEFT JOIN org_member m ON m.id = t.field0009
+			LEFT JOIN ctp_enum_item ed ON ed.id = t.field0011
+			LEFT JOIN ctp_enum_item eb ON eb.id = t.field0012
+			LEFT JOIN org_unit u ON u.id = t.field0022
+			WHERE
+				t.id ={id}
+    	]]></tcSql>
+    	<tcField name="字段处理"><![CDATA[field0003,jctime,date2string,yyyy-MM-dd HH:mm]]></tcField>
+    	
+    	<tcsonSql name="详情信息"><![CDATA[
+    		select * from formson_7043 where formmain_id={id} order by sort asc
+    	]]></tcsonSql>
+    	<tcsonField name="字段处理"><![CDATA[]]></tcsonField>
+    	
+    	<tcUpdateSql name="签名更新"><![CDATA[
+    		UPDATE formmain_7042 SET field0025={fileId} WHERE id={id}
+    	]]></tcUpdateSql>
+    </wxsupplier>
+</ctpConfig>

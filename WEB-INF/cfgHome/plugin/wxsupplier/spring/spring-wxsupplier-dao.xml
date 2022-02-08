@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+	<!-- Hibernate实现
+	<bean id="wxSupplierDao" class="com.seeyon.apps.wxsupplier.dao.impl.WxSupplierDaoImpl" />
+	-->
+	
+	<!--jdbcTemplate实现-->
+	<bean id="wxSupplierDao" class="com.seeyon.apps.wxsupplier.dao.impl.WxSupplierDao4JdbcTemplateImpl">
+		<property name="jdbcTemplate">
+			<bean class="org.springframework.jdbc.core.JdbcTemplate">
+				<property name="dataSource" ref="dataSource" />
+			</bean>
+		</property>
+	</bean>
+	
+</beans>
